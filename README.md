@@ -1,140 +1,48 @@
-# Test-AI-model-on-Guessing-5-letters-word-game
-1. Problem Statement
-Goal: What are you trying to achieve with the LLM? (1-2 clear sentences.)
-The goal of this project is to prompt a large language model (LLM) to play the game of Wordle using words from a predefined dataset. 
+[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/qAf3sQhg)
+# Final Project - Exploring LLM Capabilities
 
-Inputs and Outputs: Describe what is given to the model and what it should produce.
-Inputs: Feedback in the form of correct letter placements (maybe an ‘O’), correct letters in the wrong place (‘_’), and incorrect letters (‘X’). The set of incorrect letters that the LLM guessed
-Outputs: 5 letter word
-
-
-Connection to Requirements: Why is this project valid for the course? (1-2 sentences.)
-This project will help assess the reasoning and adaptability of LLMs in structured word-guessing tasks and could provide insights into optimizing their problem-solving strategies.
+## Learning Objectives 
+1.	Learn prompt engineering
+2.	Learn how to use prompt templates to automate LLM prompting
+3.	Explore the capabilities and limits of LLMs
+4.	Learn the design and implementation of metrics for empirical analysis
 
 
+## Project 
 
-2. Dataset
-Dataset Name and Source: Name the dataset and where it came from.
-Name: Wordle 5 Letter Words
-https://www.kaggle.com/datasets/cprosser3/wordle-5-letter-words
+In this project, you will team up with 2 other Artificial Intelligence students to form a group that will explore the limits of LLM. You will be provided with a GPT API end point which you will access via REST requests. You and your colleagues will collaborate in the same GIT repository, be sure to commit often so course staff can monitor your progress. Git commits will also be used as proof of collaboration, this is a group project so one student doing all the work is highly discouraged. 
 
+Once you have a team, you will brainstorm on an idea that involves generating structured or unstructured text using an LLM. You are free to choose the discipline, it can be science, poetry, literature, language etc. Write a draft of the idea, providing details on the problem, the dataset that you will use and how you will evaluate the performance of the LLM. Submit a draft on gradescope, a course staff will be assigned to mentor your project.
 
-Dataset Statistics: Mention #examples, types, input/output lengths, etc. (brief description, bullet points)
-Cleaned dataset statistics
-Each row/entry of the dataset has 5 columns, each containing a letter in its respective position i.e. column 1 contains first letter, column 2 contains second letter, etc
-Percentage of letters that are vowels: 35.40%
-Number of rows containing at least one vowel: 998
-‘e’ has around a 21% chance of appearing as the 4th letter in a word
-‘s’ has around a 30% chance of appearing as the 5th letter in a word
-Around 680 words (rows) have 5 distinct letters, around 300 words have 4 distinct letters, and only around 20 words have 3 distinct letters
-Only 1 palindrome exists within our dataset, however there’s 51 words with first and last letter matching
+There are many datasets available online, a good place to start your search is the huggingface dataset repository. You are also free to generate your own dataset. Large datasets require more compute, we recommend capping at 1000 entries. You will need to ensure that the subset of the dataset is balanced. 
 
+Now that you have a balanced dataset, your team needs to come up with different ways to prompt a LLM using your dataset as input. Once you have a list of prompts, you will need to abstract the prompts such that you can iterate through your dataset using your code. We will refer to these prompt abstractions as Prompt Templates. You can review online prompt template repositories to get a good idea. It can be difficult to parse LLM response because of non-standard response, it is a good idea to manually prompt the LLM first to get a sense of what logic is needed to parse your LLM responses.
 
-Dataset Creation or Changes: If you created or modified the dataset, explain how.
-The original dataset has around 2.5k entries so we randomly dropped entries in the dataset so there’s 1k entries left.
+What makes a good, average or bad response? Your team will design an evaluation protocol to measure the performance of the LLM. Depending on your problem, a simple exact match may suffice, other cases may need relaxed or heuristic approaches. Some use cases may best be evaluated by humans, do consider that there is only 3 of you and probably 1000 data points. The evaluation protocol and your experiment results are the main output of this project. This is a paradigm shift from software-based outputs common for most courses you have taken so far. To be clear, you are not making a website or an application that uses an LLM, you are designing and implementing evaluation experiments to measure the performance of LLMs. Your mentors will be there to help with the design choices, but you will need to document what you considered and the justification for the evaluation protocol in your final report. Good luck, we can’t wait to read all the ideas that you will come up with.
 
+## Important Dates 
+| Date  | Milestone | Grade  |
+| --------- | --------- | --------- |
+| 03/03 | Group project details released. | -|
+| 03/07 | Choose group members on git classroom. | -|
+| 03/14 | Submit first draft of project idea. Note: Draft should be PDF, max 300 words. | 5% |
+| 03/24 | Group mentor assigned. | - |
+| 03/28 | Mentor provides project proposal feedback. | - |
+| 04/04 | Mentor Checkpoint: (1)	Address mentor feedback on proposal (2)	Data cleaning and preprocessing (3)	Exploratory Data Analysis | 10% |
+| 04/25 | Mentor Checkpoint: (1)	Sample generations from dataset (2)	Evaluation protocol | 10%|
+| 05/07 | Submit code repository and report for final project. Report should be PDF, max 900 words.| 75%|
 
+## Examples
+* Generating SQL code from python panda code
+* Generating sentences that rhyme but limited to a specific topic
+* Generating a score for CVs given a job description
+* Generating a summary of a 383 lecture
 
-3. Prompt Methodology
-Prompt Template: Describe the structure (e.g., question → model response).
-Structure of prompt
-​​Update the current game state with the attempt number (and indicates whether or not it’s a new game).
-Show the incorrect letters guessed, previous word guess, and previous word guess feedback.
-Give a hint and clear instructions on how to adjust their guess.
-Give a note on what ‘X’, ‘O’ and ‘_’ represents as it’s how the feedback is given.
-Emphasize to only return a 5 letter word and nothing else
-Give an example on how to adjust a guess based on feedback
+## Resources
+API: https://platform.openai.com/docs/guides/text-generation
 
+Huggingface Datasets: https://huggingface.co/datasets
 
-Sample Input/Output Example:
-Input:
-We are playing Wordle, try to guess the word within 6 attempts. This is your 3 attempt.
+Kaggle: https://www.kaggle.com/datasets
 
-These are incorrect letters that have been guessed: c, r, e, l, u, n
-
-Your previous guess was : taunt   
-Previous guess feedback: X_XXO 
-Hint : change the letter at index 0, character a should be at index/indices 1, change the letter at index 2, change the letter at index 3, keep the character at index 4 the same
-
-Configure taunt based on the given hint (if applicable)
-
-Notes:
-'O' represents a correct letter in the correct position  
-'_' represents a correct letter in the wrong position  
-'X' represents an incorrect letter
-
-IMPORTANT: YOUR RESPONSE SHOULD ONLY BE A 5-LETTER WORD! DO NOT GIVE ANY REASONING. STRICTLY FOLLOW THE GIVEN HINTS AND RULES
-
-This is an example:
-Assume, the word is aback, and your guess was baack. Then, the feedback you get will be "__OOO". Also, you will get some hint. For example, you will get something like: "a should be in position(s) 1 and 3, b should be in position(s) 2” Your job is to correct your previous guess following to the given hint. So in this case, your next guess should be aback since you changed position 1 and 3 with a, position 2 with b, and keep the rest the same
-
-Output: 
-aquad
-
-Sampling Parameters:
-Model: gpt-4o-mini
-Temperature: default
-Top-p: default
-Max tokens: 100
-
-
-API Call Description:
-OpenAI API targeting gpt 4o mini using client.chat.completions.create() from the openai package
-
-
-
-4. Evaluation Approach
-Metrics Used: List them and 1-line reason why each was picked.
-Number of wins out of 1k games (probability of winning a wordle game)
-In order to evaluate if the LLM is good at solving structured word guessing tasks, a straightforward way is to count the number of wins out of 1k games.
-Average number of invalid guesses per attempt
-The LLM should ideally not make any simple mistakes such as giving 6 letter words as a guess when it’s explicitly stated in the prompt to only return a 5 letter word.
-Average number of guesses per attempt
-If LLM is good at solving this task, another way we want to evaluate them is based on how many guesses it takes to win the game (the less, the better).
-Improvement in guesses
-If the LLM isn’t good at solving this task, another way we want to evaluate them is based on whether or not they are actually improving upon their previous guesses using our hints and feedback.
-
-
-Evaluation Process: How did you run the evaluation? (automatic/human/etc.)
-We ran the evaluation automatically since we stored the required data to calculate these metrics in an object per wordle attempt.
-
-Strengths and Weaknesses: Briefly discuss what worked and what didn’t.
-The LLM turned out to be horrible at solving this task so the average number of guesses per attempt didn’t turn out to be helpful since it’s close to 6. However, we were able to evaluate the LLM by seeing if the LLM actually improved upon their guesses.
-
-
-
-5. Results
-Summary of Metrics: Provide scores in a short table or list.
-
-Metrics
-Scores
-Number of wins out of 1k attempts (games)
-59
-Number of attempts with invalid guesses
-155
-Average number of invalid guesses per attempt
-0.206
-Average number of guesses per attempt
-5.904
-Number of attempts with increasing feedback values
-291
-Number of attempts where last feedback value is greater than first
-799
-
-
-Discussion: Interpret what the results mean about your approach.
-As shown, out of 1k wordle games, the LLM only won 59 of them, which indicates a bad performance in this type of task, which leads to an average of 5.9 guesses per game.
-Although the prompt explicitly told the LLM to only return a 5 letter word, there’s 155 wordle games in which the LLM returned something other than a 5 letter word. Overall, we can observe an average of 0.206 invalid guesses per attempt.
-Despite the feedback and explicit hints to tell the LLM what to change, replace, and keep, only 291 wordle games have increasing feedback values (improved guesses). Note that there’s also 201 games where the last guess’ feedback value is actually worse than the first guess’ feedback value.
-
-
-
-6. Feedback and Communication
-Feedback Received: Summarize the main points of feedback from your draft.
-Our mentor gave us positive feedback for our initial proposal draft so we didn’t make any major changes to our project. During our mentor meeting to discuss our LLM outputs, due to the LLM’s poor performance, our mentor suggested that we explore the guesses the LLM made for each wordle attempt and see if we can add an evaluation metric on whether or not the LLM improved upon their guesses.
-
-
-How You Addressed It: List changes you made based on feedback.
-We addressed our mentor’s feedback by assigning values to 'Your guess is not a 5 letter word!', ‘X’, ‘_’, and ‘O’ in our feedback array for each wordle attempt. This way, each wordle attempt now has a feedback value array which stores each guess’ feedback value in that wordle game. 
-This is how we assigned the values: 
-char_to_val = {'Your guess is not a 5 letter word!': -1, 'X': 0, '_': 1, 'O': 2}
+UCI Data Reposistory: https://archive.ics.uci.edu/datasets
